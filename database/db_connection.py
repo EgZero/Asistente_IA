@@ -22,19 +22,19 @@ def conectar() -> sqlite3.Connection:
     #Crear carpeta data (si no existe)
     DB_PATH.parent.mkdir(parents=True,exist_ok=True)
     primera_ejecucion = not DB_PATH.exists()
+    #si la carpeta no existe, es la primera ejecucion, si existe no lo es
     conexion = sqlite3.connect(DB_PATH)
     
     #Retorna filas como diccionarios en lugar de tuplas
     conexion.row_factory = sqlite3.Row
     
-    #Activar claves foraneas
+    #Activar claves foraneas (necesario en SQLite3)
     conexion.execute("PRAGMA foreing_keys = ON")
-    
     if primera_ejecucion:
         _aplicar_esquema(conexion)
         logger.info(f"Base de datos creada en: {DB_PATH}")
-        
     return conexion
+    
         
 def _aplicar_esquema(conexion: sqlite3.Connection) -> None:
     """Lee schema.sql y crea las tablas"""
