@@ -1,0 +1,1 @@
+#Segun __init__.py, eta vaia e un paquetes

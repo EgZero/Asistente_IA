@@ -23,4 +23,4 @@ LLM_API_KEY = os.getenv("LLM_API_KEY" , "")
 LLM_MODEL = os.getenv("LLM_MODEL" , "calude-haiku-4-5")
 
 #Comprotamiento de sesion
-GUADRAR_CADA = 3 #Guardar cada 3 intercambios
+GUADRAR_CADA = 3 #Guardar cada 3 intercambios (Checkpoints)

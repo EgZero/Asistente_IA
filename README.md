@@ -145,7 +145,7 @@ pip install -r requirements.txt
 
 # 4. Configurar variables de entorno
 cp .env.example .env
-# Editar .env y añadir tu API Key de Anthropic
+# Editar .env y añadir tu API Key de la ia de tu eleccion
 
 # 5. Ejecutar el sistema
 python main.py

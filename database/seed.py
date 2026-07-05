@@ -8,7 +8,7 @@ logger = log.getLogger(__name__)
 # -----DATOS INICIALES --------
 # (keyword, command_type, target_windows, target_linux)
 
-COMANDOS_MAP=[
+COMANDOS_MAPA=[
     ("chrome",          "open_app", "chrome.exe",       "google-chrome"),
     ("navegador",       "open_app", "chrome.exe",       "google-chrome"),
     ("spotify",         "open_app", "Spotify.exe",      "spotify"),
@@ -23,7 +23,7 @@ COMANDOS_MAP=[
 
 # (keyword, target_mode, weight)
 # weight va de 0.0 a 1.0 — más alto significa más certeza de ese modo.
-MODE_TRIGGERS = [
+TRIGGERS_MODOS = [
     ("Explicame","Tutor", 0.9),
     ("No entiendo","Tutor", 0.8),
     ("Como funciona","Tutor", 0.8),
@@ -36,41 +36,41 @@ MODE_TRIGGERS = [
     ("hablemos de",     "conversacion", 0.6),    
 ]
 
-def seed_command_mapping(conn : sqlite3.Connection) -> None:
+def seed_mapaComandos(conn : sqlite3.Connection) -> None:
     """
         Insera los comandos del PC en la tabla 'command_mappings'.
     """
     conn.executemany(
         
     """
-        INSERT OR IGNORE INTO command_mappings (keyword , command_type, target_windows, target_linux)
+        INSERT OR IGNORE INTO mapa_comandos (palabra_clave , tipo_comando, target_windows, target_linux)
         VALUES (? , ? , ? , ?)
     """,
-    COMANDOS_MAP
+    COMANDOS_MAPA
     )
-    logger.info(f"{len(COMANDOS_MAP)} comandos procesados")
+    logger.info(f"{len(COMANDOS_MAPA)} comandos procesados")
     
     
-def seed_mode_triggers(conn : sqlite3.Connection) -> None:
+def seed_triggerModos(conn : sqlite3.Connection) -> None:
     """
         Insera los comandos del PC en la tabla 'mode_triggers'.
     """
     conn.executemany(
         
     """
-        INSERT OR IGNORE INTO mode_triggers (keyword , target_mode, weight)
+        INSERT OR IGNORE INTO triggers_de_modo (palabra_clave , modo_objetivo, peso)
         VALUES (? , ? , ?)
     """,
-    MODE_TRIGGERS
+    TRIGGERS_MODOS
     )
-    logger.info(f"{len(MODE_TRIGGERS)} comandos procesados")
+    logger.info(f"{len(TRIGGERS_MODOS)} comandos procesados")
     
 def ejecutar_seeds()-> None: 
     conn = None
     try:
         conn = conectar()
-        seed_command_mapping(conn)
-        seed_mode_triggers(conn)
+        seed_mapaComandos(conn)
+        seed_triggerModos(conn)
         
         conn.commit()
         #confirma las operaciones en la BD
